@@ -9,6 +9,8 @@ import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class ReadFile {
     String location;
@@ -20,23 +22,28 @@ public class ReadFile {
             Scanner myReader = new Scanner(myObj);
             int lineCounter = 0;
             String currentLine;
+            Pattern  pattern = Pattern.compile("(\\w+)"); //(.*)
             while (myReader.hasNextLine()) {
-                lineCounter = lineCounter + 1;
                 String data = myReader.nextLine();
+                Matcher matches = pattern.matcher(data);
+                //data = data.replace('/', ' ');
                 // detect language code in string
                 DetectLanguage.apiKey = "6cb7e75759b5985466d36eb4c49c42bf";
-                try {
-                    if (check(data))
-                    {
-                        results = DetectLanguage.detect(data);
-                    } else results = DetectLanguage.detect("English");
-                } catch (APIError apiError) {
-                    System.out.println("An error occurred.");
-                    apiError.printStackTrace();
+                //try {
+                  //  if (check(data))
+                    //{
+                      //  results = DetectLanguage.detect(data);
+                   // } else results = DetectLanguage.detect("English");
+                //} catch (APIError apiError) {
+                  //  System.out.println("An error occurred.");
+                    //apiError.printStackTrace();
+               // }
+                //Result result = results.get(0);
+                if(matches.find()) {
+                    lineCounter = lineCounter + 1;
+                    currentLine = lineCounter + ": " /*+ result.language */+ " : " + data.trim() + ": %1\n";
+                    finalData.add(currentLine);
                 }
-                Result result = results.get(0);
-                currentLine  = lineCounter + ": " + result.language + " : " + data + ": %1\n";
-                finalData.add(currentLine);
             }
             myReader.close();
         } catch (FileNotFoundException e) {

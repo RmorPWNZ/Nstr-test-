@@ -1,7 +1,5 @@
 com/test/filter/WriteToFile.java
  com.test.filter.WriteToFile
-com/test/filter/Txtfilter.java
- com.test.filter.Txtfilter
 com/test/filter/Program.java
  com.test.filter.Program
 com/test/filter/ReadFile.java
