@@ -22,26 +22,27 @@ public class ReadFile {
             Scanner myReader = new Scanner(myObj);
             int lineCounter = 0;
             String currentLine;
-            Pattern  pattern = Pattern.compile("(\\w+)"); //(.*)
+            Pattern pattern = Pattern.compile("(\\w+)"); //(.*)
             while (myReader.hasNextLine()) {
                 String data = myReader.nextLine();
                 Matcher matches = pattern.matcher(data);
-                //data = data.replace('/', ' ');
+                data = data.replace("//", "");
+                data = data.replace("  ", "");
                 // detect language code in string
                 DetectLanguage.apiKey = "6cb7e75759b5985466d36eb4c49c42bf";
-                //try {
-                  //  if (check(data))
-                    //{
-                      //  results = DetectLanguage.detect(data);
-                   // } else results = DetectLanguage.detect("English");
-                //} catch (APIError apiError) {
-                  //  System.out.println("An error occurred.");
-                    //apiError.printStackTrace();
-               // }
-                //Result result = results.get(0);
+                try {
+                    if (check(data))
+                    {
+                        results = DetectLanguage.detect(data);
+                    } else results = DetectLanguage.detect("English");
+                } catch (APIError apiError) {
+                    System.out.println("An error occurred.");
+                    apiError.printStackTrace();
+                }
+                Result result = results.get(0);
                 if(matches.find()) {
                     lineCounter = lineCounter + 1;
-                    currentLine = lineCounter + ": " /*+ result.language */+ " : " + data.trim() + ": %1\n";
+                    currentLine = lineCounter + ": " + result.language + " : " + data.trim() + ": %1\n";
                     finalData.add(currentLine);
                 }
             }
